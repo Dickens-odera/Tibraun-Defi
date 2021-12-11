@@ -91,4 +91,16 @@ contract Bank is Ownable {
         }
         return bankBalanceInUSD;
     }
+
+    function withdraw(string memory token, uint amount) public {
+        require(balances[msg.sender][allowedTokens[token]]>=amount, "Insufficient Balance");
+        balances[msg.sender][allowedTokens[token]]-=amount;
+        IERC20(allowedTokens[token]).transfer(msg.sender, amount);
+    }
+
+    function send(string memory token, uint amount, address beneficiary) public {
+        require(balances[msg.sender][allowedTokens[token]]>=amount, "Insufficient Balance");
+        balances[msg.sender][allowedTokens[token]]-=amount;
+        IERC20(allowedTokens[token]).transfer(beneficiary, amount);
+    }
 }
