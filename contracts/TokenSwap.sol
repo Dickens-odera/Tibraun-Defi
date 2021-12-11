@@ -6,6 +6,7 @@ import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
 import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 import '@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol';
+import '@openzeppelin/contracts/interfaces/IERC20.sol';
 
 contract TokenSwap is Ownable {
   // For the scope of these swap examples,
@@ -86,7 +87,9 @@ contract TokenSwap is Ownable {
   /// @param amountIn The exact amount of DAI that will be swapped for WETH9.
   /// @return amountOut The amount of WETH9 received.
   function swapExactInputSingle(uint256 amountIn, string memory inputToken, string memory outputToken) external returns (uint256 amountOut) {
+    
     // msg.sender must approve this contract
+    IERC20(allowedTokens[inputToken]).approve(address(this), amountIn);
 
     // Transfer the specified amount of DAI to this contract.
     TransferHelper.safeTransferFrom(allowedTokens[inputToken], msg.sender, address(this), amountIn);
