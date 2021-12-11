@@ -26,6 +26,7 @@ contract TokenSwap is Bank {
       address tokenAddress=tokenAddresses[i];
       allowedTokens[tokenName]=tokenAddress;
       allowedTokensList.push(tokenAddress);
+      allowedTokenNamesList.push(tokenName);
     }
     swapRouter = _swapRouter;
   }

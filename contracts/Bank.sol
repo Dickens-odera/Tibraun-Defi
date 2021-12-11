@@ -13,6 +13,7 @@ contract Bank is Ownable {
     mapping(address => mapping(address => uint256)) balances;
     mapping (string=>address) public allowedTokens;
     address[] allowedTokensList;
+    string[] allowedTokenNamesList;
 
     mapping(address => address) public tokenPriceFeedMapping;
 
@@ -26,6 +27,7 @@ contract Bank is Ownable {
             address tokenAddress=tokenAddresses[i];
             allowedTokens[tokenName]=tokenAddress;
             allowedTokensList.push(tokenAddress);
+            allowedTokenNamesList.push(tokenName);
         }
         emit AllowedTokensAdded(tokenNames,tokenAddresses, msg.sender);
     }
