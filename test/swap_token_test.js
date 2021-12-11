@@ -63,7 +63,7 @@ contract("TokenSwap", accounts => {
         usdBalance = await TokenSwap.getBankBalanceInUSD()
         assert.equal(usdBalance.toNumber(), 4800000000000)
     })
-    it("should that users can withdraw and send erc20 tokens if they have the sufficient balance", async() => {
+    it("should ensure that users can withdraw and send erc20 tokens if they have the sufficient balance", async() => {
         let TokenSwap = await TokenSwapContract.deployed()
         let BTC = await btcTokenContract.deployed()
 
@@ -80,5 +80,12 @@ contract("TokenSwap", accounts => {
         assert.equal(btcBalance.toNumber(), 0) // sent the other half to account1
         btcBalance = await BTC.balanceOf(accounts[1])
         assert.equal(btcBalance.toNumber(), 50000000) // account1 new balance
+    })
+    it("should allow users to swap one erc20 token for another", async() => {
+        let TokenSwap = await TokenSwapContract.deployed()
+
+        //await TokenSwap.swapExactInputSingle(50000000, "BTC", "ETH", { from: accounts[1] })
+
+        //will have to be tested on the polygon testnet 
     })
 })
