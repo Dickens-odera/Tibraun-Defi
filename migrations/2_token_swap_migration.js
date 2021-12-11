@@ -1,7 +1,7 @@
 const btcTokenContract = artifacts.require("MockBTC");
 const ethTokenContract = artifacts.require("MockETH");
-const btcMockPriceFeedContract = artifacts.require("MockV3Aggregator");
-const ethMockPriceFeedContract = artifacts.require("MockV3Aggregator");
+const btcMockPriceFeedContract = artifacts.require("MockV3AggregatorBTC");
+const ethMockPriceFeedContract = artifacts.require("MockV3AggregatorETH");
 const TokenSwapContract = artifacts.require("TokenSwap");
 
 module.exports = function(deployer) {
