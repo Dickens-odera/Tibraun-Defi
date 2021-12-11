@@ -1,5 +1,4 @@
 const TokenSwap = artifacts.require("TokenSwap");
-const { assert } = require("console");
 const web3 = require("web3");
 require('dotenv').config();
 
@@ -14,21 +13,6 @@ contract("TokenSwap", async(accounts) =>{
 
   it("deploys successfully", async() => {
       assert(instance,"Swap token contract deployed successfully");
-  });
-
-  it("should enable token swap", async() => {
-    let amount = 10; // amount.toString()
-    let tokenName = [];
-    let tokenList = [];
-    const result = instance.methods.swapExactInputSingle(amount).send({
-      from: alice,
-      gasPrice:200000,
-      gasLimit:3000000
-    }).catch(( data) => {
-        console.log(data);
-    }).error(( error) => {
-        console.error(error);
-    });
   });
 
   it("can add allowed tokens", async() => {
@@ -58,6 +42,21 @@ contract("TokenSwap", async(accounts) =>{
     assert.equal(result.logs[0].args.tokenAddresses, tokenAddresses);
   });
 
+  it("should enable token swap", async () => {
+    let amount = 10; // amount.toString()
+    let tokenName = [];
+    let tokenList = [];
+    const result = instance.methods.swapExactInputSingle(amount).send({
+      from: alice,
+      gasPrice: 200000,
+      gasLimit: 3000000
+    }).catch((data) => {
+      console.log(data);
+    }).error((error) => {
+      console.error(error);
+    });
+  });
+  
   it("can set price feed contract", async() => {
     let tokenList = [];
     let priceFeed = "0x..."
@@ -71,5 +70,6 @@ contract("TokenSwap", async(accounts) =>{
     assert(result.receipt.status, true);
     assert.equal(result.logs[0].args.token, tokenList[0]);
     assert.equal(result.logs[0].args.priceFeed, priceFeed);
+    assert.equal(result.logs[0].args.sender, owner);
   });
 });
