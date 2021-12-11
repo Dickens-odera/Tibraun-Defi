@@ -1,21 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 pragma abicoder v2;
-
+import 'https://github.com/Uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
 import "./TokenSwap.sol";
 
 contract Bank is TokenSwap {
-  
-    constructor(ISwapRouter _swapRouter, string[] memory tokenNames, address[] memory tokenAddresses) {
-        require(tokenNames.length==tokenAddresses.length);
-        for (uint i=0; i<tokenNames.length; i++){
-            string memory tokenName=tokenNames[i];
-            address tokenAddress=tokenAddresses[i];
-            allowedTokens[tokenName]=tokenAddress;
-            allowedTokensList.push(tokenAddress);
-        }
-        swapRouter = _swapRouter;
+    ISwapRouter immutable swapRouter;
+    constructor(ISwapRouter swapRouter, string[] memory tokenNames, address[] memory tokenAddresses) public 
+    TokeSwap(swapRouter,tokenNames,tokenAddresses){
+
     }
+    
     function deposit(uint256 value, string memory token) public {
         require(allowedTokens[token] != address(0));
         IERC20(allowedTokens[token]).transfer(address(this), value);

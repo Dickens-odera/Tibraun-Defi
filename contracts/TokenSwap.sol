@@ -1,14 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 pragma abicoder v2;
-import 'https://github.com/Uniswap/v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol';
-import 'https://github.com/Uniswap/v3-periphery/blob/main/contracts/libraries/TransferHelper.sol';
-import 'https://github.com/smartcontractkit/chainlink/blob/develop/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol';
 import '@openzeppelin/contracts/interfaces/IERC20.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
-//import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
-//import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
-//import '@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol';
+import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
+import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
+import '@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol';
 
 
 contract TokenSwap is Ownable {
@@ -18,8 +15,6 @@ contract TokenSwap is Ownable {
 
   // It should be noted that for the sake of these examples, we purposefully pass in the swap router instead of inherit the swap router for simplicity.
   // More advanced example contracts will detail how to inherit the swap router safely.
-
-  
 
   // This example swaps DAI/WETH9 for single path swaps and DAI/USDC/WETH9 for multi path swaps.
 
@@ -36,7 +31,7 @@ ISwapRouter immutable swapRouter;
   // For this example, we will set the pool fee to 0.3%.
   uint24 public constant poolFee = 3000;
 
-  event AllowedTokensAdded(string[] indexed tokenNames, string[] indexed tokenAddresses, address indexed sender);
+  event AllowedTokensAdded(string[] indexed tokenNames, address[] indexed tokenAddresses, address indexed sender);
   event NewPriceFeedContract(address indexed token, address indexed priceFeed, address indexed sender);
 
   constructor(ISwapRouter _swapRouter, string[] memory tokenNames, address[] memory tokenAddresses) {

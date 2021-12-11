@@ -1,14 +1,24 @@
-const TokenSwap = artifacts.require("TokenSwap");
+const Bank = artifacts.require("Bank");
 const web3 = require("web3");
 require('dotenv').config();
 
-contract("TokenSwap", async(accounts) =>{
+contract("Bank", async(accounts) =>{
   let instance;
+  let tokenNames = [];
+  let tokenAddresses = [];
   beforeEach(async () => {
-    instance = await TokenSwap.deployed();
+    instance = await Bank.deployed();
     [owner, alice, bob] = accounts;
     const DAIAddress = process.env.DAI_TOKEN_ADDRESS;
     const USDTAddress = process.env.USDT_TOKEN_ADDRESS;
+    tokenNames = [
+      "BTC",
+      "ETH"
+    ];
+    tokenAddresses = [
+      "0x...",
+      "0xvhdd..."
+    ];
   });
 
   it("deploys successfully", async() => {
@@ -16,16 +26,6 @@ contract("TokenSwap", async(accounts) =>{
   });
 
   it("can add allowed tokens", async() => {
-      const tokenNames = [
-        "BTC",
-        "ETH"
-      ];
-
-      const tokenAddresses = [
-          "0x...",
-          "0xvhdd..."
-      ];
-
     const result = await instance.addAllowedTokens(tokenNames, tokenAddresses, { from: owner});
     const allowedTokens = await instance.allowedTokens();
     let allowedTokensList;
@@ -71,5 +71,25 @@ contract("TokenSwap", async(accounts) =>{
     assert.equal(result.logs[0].args.token, tokenList[0]);
     assert.equal(result.logs[0].args.priceFeed, priceFeed);
     assert.equal(result.logs[0].args.sender, owner);
+  });
+
+  decribe("deposits", function(){
+    it("can enable a user to deposit token", async() => {
+      let value = 10;
+      const result = await instance.deposit(value,tokenNames[0], {from: alice});
+      assert(result.receipt.status,true);
+      assert.equal(instance.balances([alice][tokenNames[tokenNames[0]]]), value);
+    });
+
+    it("can get token balance", async() => {
+      const result = await instance.getTokenBalance(tokenNames[0], {from: alice});
+      const balance = await instance.balances([alice][tokenNames[0]]);
+      assert.equal(result,balance);
+    });
+    
+    it("can get token balance in USD", async() =>{
+      const result = await instance.getBankBalanceInUSD();
+      //to be continued
+    });
   });
 });
