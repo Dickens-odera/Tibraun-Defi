@@ -4,7 +4,7 @@ const btcMockPriceFeedContract = artifacts.require("MockV3Aggregator");
 const ethMockPriceFeedContract = artifacts.require("MockV3Aggregator");
 const TokenSwapContract = artifacts.require("TokenSwap");
 
-module.exports = function(deployer, network, accounts) {
+module.exports = function(deployer) {
     let decimals = 8
     let btcPriceValue = 48000 * 10 ** 8
     let ethPriceValue = 4000 * 10 ** 8
@@ -20,5 +20,5 @@ module.exports = function(deployer, network, accounts) {
     const ethTokenAddress = ethToken.address
     let addressList = [btcTokenAddress, ethTokenAddress]
     let nameList = ["BTC", "ETH"]
-    deployer.deploy(TokenSwapContract, ExactInputSingleParams, nameList, addressList);
+    deployer.deploy(TokenSwapContract, 0xE592427A0AEce92De3Edee1F18E0157C05861564, nameList, addressList);
 }
