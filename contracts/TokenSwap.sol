@@ -28,6 +28,10 @@ contract TokenSwap is Ownable {
   // For this example, we will set the pool fee to 0.3%.
   uint24 public constant poolFee = 3000;
 
+  event AllowedTokensAdded(string[] indexed tokenNames, string[] indexed tokenAddresses, address indexed sender);
+  event NewPriceFeedContract(address indexed token, address indexed priceFeed);
+
+
   constructor(ISwapRouter _swapRouter, string[] memory tokenNames, address[] memory tokenAddresses) {
     require(tokenNames.length==tokenAddresses.length);
     for (uint i=0; i<tokenNames.length; i++){
@@ -36,9 +40,9 @@ contract TokenSwap is Ownable {
       allowedTokens[tokenName]=tokenAddress;
       allowedTokensList.push(tokenAddress);
     }
-    swapRouter = _swapRouter;
+    swapRouter = _swapRouter;+
   }
-
+  
   function addAllowedTokens(string[] memory tokenNames, address[] memory tokenAddresses) public onlyOwner {
     require(tokenNames.length==tokenAddresses.length);
     for (uint i=0; i<tokenNames.length; i++){
@@ -47,6 +51,7 @@ contract TokenSwap is Ownable {
       allowedTokens[tokenName]=tokenAddress;
       allowedTokensList.push(tokenAddress);
     }
+    emit AllowedTokensAdded(tokenNames,tokenAddresses, msg.sender);
   }
 
   function setPriceFeedContract(address _token, address _priceFeed)
@@ -54,6 +59,7 @@ contract TokenSwap is Ownable {
     onlyOwner
   {
     tokenPriceFeedMapping[_token] = _priceFeed;
+    emit NewPriceFeedContract(_token,_priceFeed);
   }
 
   function getTokenValue(address _token)
