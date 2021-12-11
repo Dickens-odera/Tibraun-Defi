@@ -1,14 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 pragma abicoder v2;
-//import 'https://github.com/Uniswap/v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol';
-import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
-import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
-import '@openzeppelin/contracts/access/Ownable.sol';
-import '@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol';
-import '@openzeppelin/contracts/interfaces/IERC20.sol';
 
-contract TokenSwap is Ownable {
+import "./Bank.sol";
+
+contract TokenSwap is Bank {
   // For the scope of these swap examples,
   // we will detail the design considerations when using
   // `exactInput`, `exactInputSingle`, `exactOutput`, and  `exactOutputSingle`.
@@ -21,22 +17,9 @@ contract TokenSwap is Ownable {
   // This example swaps DAI/WETH9 for single path swaps and DAI/USDC/WETH9 for multi path swaps.
 
 
-ISwapRouter immutable swapRouter;
-
-
-  mapping(address => mapping(address => uint256)) balances;
-  mapping (string=>address) public allowedTokens;
-  address[] allowedTokensList;
-
-  mapping(address => address) public tokenPriceFeedMapping;
-
-  // For this example, we will set the pool fee to 0.3%.
-  uint24 public constant poolFee = 3000;
-
-  event AllowedTokensAdded(string[] indexed tokenNames, address[] indexed tokenAddresses, address indexed sender);
-  event NewPriceFeedContract(address indexed token, address indexed priceFeed);
+  ISwapRouter immutable swapRouter;
   
-  function addAllowedTokens(string[] memory tokenNames, address[] memory tokenAddresses) public onlyOwner {
+  constructor(ISwapRouter _swapRouter, string[] memory tokenNames, address[] memory tokenAddresses) {
     require(tokenNames.length==tokenAddresses.length);
     for (uint i=0; i<tokenNames.length; i++){
       string memory tokenName=tokenNames[i];
@@ -44,41 +27,11 @@ ISwapRouter immutable swapRouter;
       allowedTokens[tokenName]=tokenAddress;
       allowedTokensList.push(tokenAddress);
     }
-    emit AllowedTokensAdded(tokenNames,tokenAddresses, msg.sender);
+    swapRouter = _swapRouter;
   }
 
-  function setPriceFeedContract(address _token, address _priceFeed)
-    public
-    onlyOwner
-  {
-    tokenPriceFeedMapping[_token] = _priceFeed;
-    emit NewPriceFeedContract(_token,_priceFeed);
-  }
-
-  function getTokenValue(address _token)
-    public
-    view
-    returns (uint256, uint256)
-  {
-    //price feed address
-    address tokenPriceFeedAddress = tokenPriceFeedMapping[_token];
-    AggregatorV3Interface priceFeed = AggregatorV3Interface(
-      tokenPriceFeedAddress
-    );
-    (, int256 price, , , ) = priceFeed.latestRoundData();
-    uint256 decimals = uint256(priceFeed.decimals());
-    return (uint256(price), decimals);
-  }
-
-  function convertInput2Output(uint256 _amountIn, string memory _inputToken, string memory _outputToken) public view returns(uint){
-    (uint inputTokenPrice, uint inputTokenDecimals)=getTokenValue(allowedTokens[_inputToken]);
-    uint input2USD = (_amountIn*inputTokenPrice) / 10**inputTokenDecimals;
-
-    (uint outputTokenPrice,)=getTokenValue(allowedTokens[_outputToken]);
-    uint output2USD = outputTokenPrice;
-    uint input2Output = input2USD/output2USD;
-    return input2Output;
-  }
+  // For this example, we will set the pool fee to 0.3%.
+  uint24 public constant poolFee = 3000;
 
   /// @notice swapExactInputSingle swaps a fixed amount of DAI for a maximum possible amount of WETH9
   /// using the DAI/WETH9 0.3% pool by calling `exactInputSingle` in the swap router.
