@@ -10,7 +10,7 @@ import '@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol';
 import '@openzeppelin/contracts/interfaces/IERC20.sol';
 
 contract Bank is Ownable {
-    mapping(address => mapping(address => uint256)) balances;
+    mapping(address => mapping(address => uint256)) public balances;
     mapping (string=>address) public allowedTokens;
     address[] allowedTokensList;
     string[] allowedTokenNamesList;
@@ -68,7 +68,7 @@ contract Bank is Ownable {
 
     function deposit(uint256 value, string memory token) public {
         require(allowedTokens[token] != address(0));
-        IERC20(allowedTokens[token]).transfer(address(this), value);
+        IERC20(allowedTokens[token]).transferFrom(msg.sender, address(this), value);
         balances[msg.sender][allowedTokens[token]] += value;
     }
 
