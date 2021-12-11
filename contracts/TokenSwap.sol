@@ -1,12 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 pragma abicoder v2;
-//import 'https://github.com/Uniswap/v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol';
-import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
-import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
-import '@openzeppelin/contracts/access/Ownable.sol';
-import '@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol';
+import 'https://github.com/Uniswap/v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol';
+import 'https://github.com/Uniswap/v3-periphery/blob/main/contracts/libraries/TransferHelper.sol';
+import 'https://github.com/smartcontractkit/chainlink/blob/develop/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol';
 import '@openzeppelin/contracts/interfaces/IERC20.sol';
+import '@openzeppelin/contracts/access/Ownable.sol';
+//import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
+//import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
+//import '@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol';
+
 
 contract TokenSwap is Ownable {
   // For the scope of these swap examples,
@@ -40,7 +43,7 @@ contract TokenSwap is Ownable {
       allowedTokens[tokenName]=tokenAddress;
       allowedTokensList.push(tokenAddress);
     }
-    swapRouter = _swapRouter;+
+    swapRouter = _swapRouter;
   }
   
   function addAllowedTokens(string[] memory tokenNames, address[] memory tokenAddresses) public onlyOwner {
