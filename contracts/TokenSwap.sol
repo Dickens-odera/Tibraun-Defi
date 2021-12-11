@@ -29,7 +29,7 @@ contract TokenSwap is Ownable {
   uint24 public constant poolFee = 3000;
 
   event AllowedTokensAdded(string[] indexed tokenNames, string[] indexed tokenAddresses, address indexed sender);
-  event NewPriceFeedContract(address indexed token, address indexed priceFeed);
+  event NewPriceFeedContract(address indexed token, address indexed priceFeed, address indexed sender);
 
 
   constructor(ISwapRouter _swapRouter, string[] memory tokenNames, address[] memory tokenAddresses) {
@@ -59,7 +59,7 @@ contract TokenSwap is Ownable {
     onlyOwner
   {
     tokenPriceFeedMapping[_token] = _priceFeed;
-    emit NewPriceFeedContract(_token,_priceFeed);
+    emit NewPriceFeedContract(_token,_priceFeed, msg.sender);
   }
 
   function getTokenValue(address _token)
