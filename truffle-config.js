@@ -24,8 +24,8 @@ require('dotenv').config();
 //
 // const fs = require('fs');
 //const mnemonic = fs.readFileSync(".env").toString().trim();
-//const MNEMONIC = process.env.MNEMONIC;
-//const PROJECT_ID = process.env.INFURA_PROJECT_ID;
+const MNEMONIC = process.env.MNEMONIC;
+const PROJECT_ID = process.env.INFURA_PROJECT_ID;
 module.exports = {
     /**
      * Networks define how you connect to your ethereum client and let you set the
