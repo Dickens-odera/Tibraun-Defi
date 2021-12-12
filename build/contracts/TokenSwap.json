@@ -27592,10 +27592,80 @@
       "links": {},
       "address": "0x2D1194fE2693a8ea4eb43490d67Af88c3C989fe8",
       "transactionHash": "0x92249652a2b5c1237847684bdcd2315f3a6989ffd9c5615a9df86067eceee18f"
+    },
+    "80001": {
+      "events": {
+        "0x3a666b286cd7f0b1938fdc87e1147d56462ffe518db5b0c990310fa07c3288e6": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "string[]",
+              "name": "tokenNames",
+              "type": "string[]"
+            },
+            {
+              "indexed": true,
+              "internalType": "address[]",
+              "name": "tokenAddresses",
+              "type": "address[]"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            }
+          ],
+          "name": "AllowedTokensAdded",
+          "type": "event"
+        },
+        "0xb16d409940dc728462f5982a32c1fa960a0f3b7aec11139cf7787b7f7607cb61": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "priceFeed",
+              "type": "address"
+            }
+          ],
+          "name": "NewPriceFeedContract",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x4a319e04Cf03d5B6d2B628f76438dc3A6Ae56fc8",
+      "transactionHash": "0x72f6aefb4d24198807760674f8846117cc3fccc39b2e94172b37a85b1ec117c5"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-11T22:18:36.976Z",
+  "updatedAt": "2021-12-12T09:43:35.217Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
