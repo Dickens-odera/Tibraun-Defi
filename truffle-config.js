@@ -18,8 +18,8 @@
  *
  */
 
-//const HDWalletProvider = require("@truffle/hdwallet-provider")
-//require('dotenv').config();
+const HDWalletProvider = require("@truffle/hdwallet-provider")
+require('dotenv').config();
 // const infuraKey = "fj4jll3k.....";
 //
 // const fs = require('fs');
@@ -44,28 +44,28 @@ module.exports = {
         // tab if you use this network and you must also set the `host`, `port` and `network_id`
         // options below to some value.
         //
-        //development: {
-        //  host: "127.0.0.1",     // Localhost (default: none)
-        //  port: 7545,            // Standard Ethereum port (default: none)
-        //  network_id: "*",
-        //  gas: 6721975,
-        //  gasPrice: '20000000000'
-        //  // Any network (default: none)
-        //},
-        //ganache: {
-        //  host: "127.0.0.1",
-        //  port: 7545,
-        //  network_id: "*"
-        //},
-        //matic: {
-        //  provider: () => new HDWalletProvider(MNEMONIC, `https://polygon-mumbai.infura.io/v3/${PROJECT_ID}`),
-        //  network_id: 80001,
-        //  confirmations: 2,
-        //  timeoutBlocks: 200,
-        //  skipDryRun: true,
-        //  gas: 6000000,
-        //  gasPrice: 10000000000,
-        //},
+        development: {
+         host: "127.0.0.1",     // Localhost (default: none)
+         port: 7545,            // Standard Ethereum port (default: none)
+         network_id: "*",
+         gas: 6721975,
+         gasPrice: '20000000000'
+         // Any network (default: none)
+        },
+        ganache: {
+         host: "127.0.0.1",
+         port: 7545,
+         network_id: "*"
+        },
+        matic: {
+         provider: () => new HDWalletProvider(MNEMONIC, `https://polygon-mumbai.infura.io/v3/${PROJECT_ID}`),
+         network_id: 80001,
+         confirmations: 2,
+         timeoutBlocks: 200,
+         skipDryRun: true,
+         gas: 6000000,
+         gasPrice: 10000000000,
+        },
         // Another network with more advanced options...
         // advanced: {
         // port: 8777,             // Custom port
