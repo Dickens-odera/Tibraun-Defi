@@ -65,6 +65,7 @@ module.exports = {
             skipDryRun: true,
             gas: 6000000,
             gasPrice: 10000000000,
+            networkCheckTimeout: 10000000,
         },
         // Another network with more advanced options...
         // advanced: {
